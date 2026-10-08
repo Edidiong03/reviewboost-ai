@@ -9,8 +9,16 @@
     "start": "next start"
   },
   "dependencies": {
-    "next": "14.2.5",
-    "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "@clerk/nextjs": "^7.9.11",
+    "@next/swc-wasm-nodejs": "^15.3.3",
+    "next": "^15.5.7",
+    "openai": "^7.30.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "@types/react": "^19.3.0",
+    "typescript": "^5.4.5"
   }
 }
