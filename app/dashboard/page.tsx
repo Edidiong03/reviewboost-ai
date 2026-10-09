@@ -6,7 +6,7 @@ export default function DashboardPage() {
   const [review, setReview] = useState("");
   const [reply, setReply] = useState("");
   const [loading, setLoading] = useState(false);
-
+const [tone, setTone] = useState("professional");
   async function handleGenerate() {
     setLoading(true);
     const res = await fetch("/api/generate-reply", {
