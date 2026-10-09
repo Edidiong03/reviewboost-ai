@@ -12,7 +12,7 @@ const [tone, setTone] = useState("professional");
     const res = await fetch("/api/generate-reply", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ review }),
+      body: JSON.stringify({ review,tone }),
     });
     const data = await res.json();
     setReply(data.reply);
@@ -34,7 +34,11 @@ const [tone, setTone] = useState("professional");
         placeholder="e.g. Food was cold and service was slow..."
         style={{width: '100%', height: 100, marginTop: 20, padding: 10, border: '1px solid #ccc', borderRadius: 8}}
       />
-
+<div style={{display:'flex', gap:'8px', marginTop:'12px'}}>
+  {["professional","friendly","apologetic","funny"].map(t => (
+    <button key={t} onClick={()=>setTone(t)} type="button" style={{padding:'6px 12px', borderRadius:'20px', border:'1px solid black', background: tone===t ? 'black' : 'white', color: tone===t ? 'white' : 'black'}}>{t}</button>
+  ))}
+</div>
       <button
         onClick={handleGenerate}
         disabled={loading || !review}
