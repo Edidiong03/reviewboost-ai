@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
 
   const lower = review.toLowerCase();
   const isNegative = ["cold","bad","rude","slow","dirty","worst","terrible","disappointing"].some(w => lower.includes(w));
-  const snippet = review.slice(0,60);
+  const isNegative = ["cold","bad","rude","slow","dirty","worst","terrible","disappointing"].some(w => lower.includes(w));
 
   let reply = "";
 
