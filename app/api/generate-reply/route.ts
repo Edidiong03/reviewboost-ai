@@ -8,7 +8,9 @@ export async function POST(req: NextRequest) {
   const isNegative = ["cold","bad","rude","slow","dirty","worst","terrible","disappointing"].some(w => lower.includes(w));
   const snippet = review.slice(0,60);
   let reply = "";
+  let insight = "";
 
+  // REPLY LOGIC
   if (tone === "friendly") {
     reply = isNegative 
       ? `Oh no, sorry about that! You mentioned "${snippet}..." - that's not cool. Thanks for telling us, we want to make your next visit way better!`
@@ -25,5 +27,20 @@ export async function POST(req: NextRequest) {
       : `Thank you for your positive feedback on "${snippet}...". We appreciate your business and look forward to serving you again.`;
   }
 
-  return NextResponse.json({ reply });
+  // SALES INSIGHT LOGIC - THE MONEY PART
+  if (lower.includes("cold") || lower.includes("late") || lower.includes("slow")) {
+    insight = "💰 Sales Opportunity: 2+ customers complained about cold/slow delivery. Upsell: 'Hot Bag Guarantee + Priority Delivery for +₦500' - Turn complaints to extra revenue.";
+  } else if (lower.includes("rude") || lower.includes("bad service")) {
+    insight = "📈 Insight: Service complaints detected. Upsell: Staff training package + 'VIP Customer Service' badge to justify higher pricing.";
+  } else if (lower.includes("price") || lower.includes("expensive")) {
+    insight = "💡 Insight: Price sensitivity. Upsell: Create 'Value Bundle' - small discount but higher total order value.";
+  } else if (lower.includes("dirty") || lower.includes("clean")) {
+    insight = "⚠️ Insight: Cleanliness issue. Opportunity: 'Hygiene Certified' marketing + charge premium for trusted cleanliness.";
+  } else if (!isNegative) {
+    insight = "✅ Positive momentum! Insight: Customer loves you. Upsell: Ask for referral - 'Love us? Get 10% off for a friend' - turn happy review to new customer.";
+  } else {
+    insight = "🔍 Insight: General feedback. Opportunity: Reply fast and offer 10% off next order to recover customer - cheaper than losing them.";
+  }
+
+  return NextResponse.json({ reply, insight, sentiment: isNegative ? "negative" : "positive" });
 }
